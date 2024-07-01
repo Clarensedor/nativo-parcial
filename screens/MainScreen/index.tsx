@@ -22,13 +22,19 @@ const MainScreen = ({ navigation }) => {
   };
 
   const [jokes, setJokes] = useState([]);
-  const [jokeFirstLine, setJokeFirstLine] = useState('');
-  const [jokeSecondLine, setJokeSecondLine] = useState('');
+  const [PrimeraLinea, setPrimeraLinea] = useState('');
+  const [segundalinea, setSegundaLinea] = useState('');
+  const [terceralinea, setTerceraLinea] = useState('');
+  const [cuartalinea, setCuartaLinea] = useState('');
+  const [elid, setElId] = useState('');
 
+
+  //Hola profe me falto solo que se actualizara al agregar un nuevo deporte. Var a tener que recargar despues
+  //de agregar un deporte se que hay algo en el useEffect para actualizar pero no me acuerdo y quedo en falta por eso
   useEffect(() => {
     const getJokesPayload = async () => {
       const newJokes = await getJokes();
-      setJokes(newJokes.slice(0, 5));
+      setJokes(newJokes.slice(0, 10));
     };
     getJokesPayload();
   }, []);
@@ -38,53 +44,83 @@ const MainScreen = ({ navigation }) => {
   };
 
   const onFirstLineInputChange = (value) => {
-    setJokeFirstLine(value);
+    setPrimeraLinea(value);
   };
 
   const onAddNewJokeHandler = async () => {
     let newJoke = {
-      title: jokeFirstLine,
-      description: jokeSecondLine,
+      id: (jokes.length + 1).toString(),
+      title: PrimeraLinea,
+      description: segundalinea,
+      players: terceralinea,
+      categories : terceralinea
     };
 
     const addedJoke = await addJoke(newJoke);
 
     if (addedJoke) {
       setJokes([...jokes, addedJoke]);
-      setJokeFirstLine('');
-      setJokeSecondLine('');
+      setPrimeraLinea('');
+      setSegundaLinea('');
+      setTerceraLinea('');
+      setCuartaLinea('');
     }
   };
 
   return (
     <>
-      <Text style={styles.h1}>My Dog Breed List</Text>
+      <Text style={styles.h1}>Mi segundo Parcial :D</Text>
       {Platform.OS === 'android' && (
-        <Text style={styles.h1}>Now on Android!</Text>
+        <Text style={styles.h1}>En situacion de android :c</Text>
       )}
       <View style={styles.newJokeContainer}>
         <TextInput
           style={styles.input}
-          placeholder="Put the name of the ssssbreed"
-          value={jokeFirstLine}
+          placeholder="Por aca el nombre del deporte :D"
+          value={PrimeraLinea}
           onChangeText={onFirstLineInputChange}
         />
-        <TextInput 
-        
+        <TextInput
+
           style={styles.input}
-          placeholder="Put the description of the breed"
-          value={jokeSecondLine}
+          placeholder="Por aca la descripcion :D"
+          value={segundalinea}
           onChangeText={(value) => {
-            setJokeSecondLine(value);
+            setSegundaLinea(value);
           }}
         />
-        <Button title="Add new breed" onPress={onAddNewJokeHandler} />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Por aca los jugadores :D"
+          value={terceralinea}
+          onChangeText={(value) => {
+            setTerceraLinea(value);
+          }}
+        />
+
+
+        <TextInput
+          style={styles.input}
+          placeholder="Por aca la categoria :D" 
+          value={cuartalinea}
+          onChangeText={(value) => {
+            setCuartaLinea(value);
+          }}
+        />
+
+
+
+
+
+      <Button title="Add new breed" onPress={onAddNewJokeHandler} />
       </View>
       <ScrollView
         contentInsetAdjustmentBehavior="never"
         style={backgroundStyle}
         contentContainerStyle={{ alignItems: 'baseline' }}
       >
+
         {jokes.map((j, index) => {
           return (
             <Card
@@ -95,23 +131,18 @@ const MainScreen = ({ navigation }) => {
                     id: j.id,
                     title: j.title,
                     description: j.description,
-                    assignedTo: j.assignedTo,
-                    startDate: j.startDate,
-                    status: j.status,
-                    endDate: j.endDate,
-                    priority: j.priority,
+                    players: j.players,
+                    categories: j.categories,
                   },
                   deleteLocalJoke: deleteLocalJoke, // Pasa la función de eliminación local
                 });
               }}
             >
+              <Text>{j.id}</Text>
               <Text>{j.title}</Text>
               <Text style={{ marginTop: 8 }}>{j.description}</Text>
-              <Text style={{ marginTop: 8 }}>{j.assignedTo}</Text>
-              <Text style={{ marginTop: 8 }}>{j.startDate}</Text>
-              <Text style={{ marginTop: 8 }}>{j.status}</Text>
-              <Text style={{ marginTop: 8 }}>{j.endDate}</Text>
-              <Text style={{ marginTop: 8 }}>{j.priority}</Text>
+              <Text style={{ marginTop: 8 }}>{j.players}</Text>
+              <Text style={{ marginTop: 8 }}>{j.categories}</Text>
             </Card>
           );
         })}

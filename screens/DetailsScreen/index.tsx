@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Button, ActivityIndicator } from 'react-native';
-import { deleteJoke } from '../../api'; // Importa la función de eliminación de la API
-
+import { deleteJoke } from '../../api'; 
 const DetailsScreen = ({ route, navigation }) => {
   const info = route.params.item;
-  const { deleteLocalJoke } = route.params; // Recibe la función de eliminación local
+  const { deleteLocalJoke } = route.params; 
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
     const success = await deleteJoke(info.id);
     if (success) {
-      deleteLocalJoke(info.id); // Elimina la tarea del estado local
+      deleteLocalJoke((info.id)); 
       setLoading(false);
-      navigation.goBack(); // Navega de regreso a la pantalla principal
+      navigation.goBack(); 
     } else {
       setLoading(false);
-      // Manejar el error según sea necesario
     }
   };
 
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.h1}>Details Screen</Text>
-      <Text>{info.id}</Text>
+      <Text style={styles.h1}>Los Detalles :D</Text>
       <Text>{info.title}</Text>
       <Text>{info.description}</Text>
-      <Text>{info.assignedTo}</Text>
-      <Text>{info.startDate}</Text>
-      <Text>{info.status}</Text>
-      <Text>{info.endDate}</Text>
-      <Text>{info.priority}</Text>
+      <Text>{info.players}</Text>
+      <Text>{info.categories}</Text>
+
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (

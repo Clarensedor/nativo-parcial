@@ -1,5 +1,5 @@
 export const getJokes = async () => {
-  const url = 'http://10.0.2.2:3000/api/tasks';
+  const url = 'http://10.0.2.2:3000/api/games/';
   try {
     const response = await fetch(url);
     if (response.ok) {
@@ -14,15 +14,15 @@ export const getJokes = async () => {
   }
 };
 
-export const addJoke = async (newJoke) => {
-  const url = 'http://10.0.2.2:3000/api/tasks';
+export const addJoke = async (newGame) => {
+  const url = 'http://10.0.2.2:3000/api/games/';
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(newJoke),
+      body: JSON.stringify(newGame),
     });
     if (response.ok) {
       const payload = await response.json();
@@ -36,8 +36,8 @@ export const addJoke = async (newJoke) => {
   }
 };
 
-export const deleteJoke = async (taskId) => {
-  const url = `http://10.0.2.2:3000/api/tasks/${taskId}`;
+export const deleteJoke = async (gameId) => {
+  const url = `http://10.0.2.2:3000/api/games/${gameId}`;
   try {
     const response = await fetch(url, {
       method: 'DELETE',
